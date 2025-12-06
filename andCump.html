@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="theme-color" content="#7fffd4" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Un espacio para días difíciles 💚💜</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #7fffd4, #b380ff);
+    color: #ffffff;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Partículas flotantes */
+  .particula {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: flotar 15s infinite linear;
+  }
+
+  @keyframes flotar {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.5;
+    }
+    90% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(-100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contenedor-principal {
+      padding: 25px 20px;
+      margin: 10px;
+    }
+    .frase {
+      font-size: 1.1rem;
+      padding: 15px;
+    }
+    .mensaje-flotante {
+      top: 10px;
+      right: 10px;
+      max-width: 200px;
+      font-size: 0.85rem;
+    }
+    .contador-automatico {
+      font-size: 0.7rem;
+    }
+  }
+
+  .contenedor-principal {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 600px;
+    margin: 20px;
+  }
+
+  /* Mensaje flotante */
+  .mensaje-flotante {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    padding: 15px 22px;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    animation: aparecer 1.2s ease, flotacion 4s infinite ease-in-out;
+    z-index: 9999;
+    text-align: left;
+    max-width: 260px;
+  }
+
+  @keyframes aparecer {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes flotacion {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+    100% { transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .emoji-titulo {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    animation: latido 2s infinite;
+  }
+
+  @keyframes latido {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .frase {
+    font-size: 1.4rem;
+    margin: 25px 0;
+    padding: 20px;
+    line-height: 1.6;
+    background-color: #7525ec; 
+    color: #ffffff;
+    border-radius: 15px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+    border-left: 4px solid #7fffd4;
+    border-right: 4px solid #904cf7;
+    cursor: pointer;
+  }
+
+  .frase:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(117, 37, 236, 0.4);
+  }
+
+  .contador-automatico {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 8px;
+    font-style: italic;
+    height: 20px;
+  }
+
+  button {
+    padding: 14px 30px;
+    border: none;
+    background: linear-gradient(to right, #7fffd4, #b380ff);
+    color: white;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 15px 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(127, 255, 212, 0.3);
+  }
+
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(127, 255, 212, 0.4);
+    background: linear-gradient(to right, #b380ff, #7fffd4);
+  }
+
+  button:active {
+    transform: translateY(1px);
+  }
+
+  .controles-musica {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .icono-musica {
+    font-size: 1.5rem;
+    animation: girar 4s infinite linear;
+  }
+
+  @keyframes girar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .mensaje-musica {
+    font-size: 0.95rem;
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+    background-color: rgba(179, 128, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    transition: all 0.5s ease;
+  }
+
+  .info-cancion {
+    font-size: 0.85rem;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Efecto de brillo al cambiar frase */
+  @keyframes brillo {
+    0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0); }
+    50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+    100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0); }
+  }
+
+  .cambiando {
+    animation: brillo 1s ease;
+  }
+</style>
+</head>
+<body onclick="iniciarMusicaSiPrimeraVez()">
+
+<div class="contenedor-principal">
+  <div class="emoji-titulo">💜💚</div>
+  <h1>For vos</h1>
+  
+  <div class="frase" id="frase" onclick="cambiarFrase(event)">
+    Si el mundo te pone de rodillas, es para que descubras que puedes levantarte.
+  </div>
+  
+  <div class="contador-automatico" id="contadorAutomatico">
+    La frase cambia automáticamente cada 12 segundos
+  </div>
+  
+  <button onclick="cambiarCancion()">
+    ▶️
+  </button>
+  
+  <div class="controles-musica">
+    <div class="icono-musica">🎵</div>
+    <p class="mensaje-musica" id="mensajeMusica">
+      Haz clic en cualquier parte para activar la música
+    </p>
+  </div>
+  
+  <p class="info-cancion" id="infoCancion">
+    Canción actual: <span id="nombreCancion">-</span>
+  </p>
+</div>
+
+<audio id="musica"></audio>
+
+<p class="footer">Made with 💚💜 for you, Recuerda jamás rendirte.</p>
+
+<div class="mensaje-flotante">
+  <br>
+  Para que en tus días difíciles recuerdes lo que vales y todo lo que eres capaz de lograr.<br>
+  Si en algún momento te resulta útil, aquí estará.  
+</div>
+
+<script>
+const frases = [
+  // ---- Míos ----
+  "Cada persona es capaz de algo extraordinario… solo necesita creerlo.",
+  "La verdadera fuerza es levantarte cuando sientes que no queda nada dentro.",
+  "Cada pequeño avance tuyo cuenta más de lo que imaginas",
+  "A veces tu tiempo no coincide con el del mundo… y está bien, persevera",
+  "No necesitas tener todas las respuestas hoy; el camino se revela andando",
+  "Incluso cuando dudas, tu luz vuelve a aparecer, jamás te rindas.",
+  "El mundo te pone de rodillas para que descubras que puedes levantarte.",
+  "Cuando salgas de la tormenta, no serás la misma persona que entró en ella (Haruki Murakami)",
+  "Los problemas más difíciles tienen soluciones, solo necesitarás tiempo.",
+  "Eres más fuerte de lo que crees y más capaz de lo que imaginas",
+  "Tu proceso es único, como una ecuación con solución personal; a veces hay que perderse para encontrarse",
+  "Cada paso cuenta, cada intento suma a tu función de crecimiento",
+  "El tiempo es tu aliado, no tu enemigo; confía en el proceso",
+  "La paciencia y la perseverancia son tus mejores algoritmos",
+  "Ser héroe no es tener poderes; es elegir hacer lo correcto incluso cuando te tiemblan las piernas",
+  "Corre hacia adelante, aunque el miedo quiera detenerte. La velocidad nace del valor",
+  "Lo que importa no es de dónde vienes, sino quién eliges ser.",
+  "Sin arrenpetimiento de nada, porque yo sabía que el vidrio cortaba y aún así decidí agarrarlo con las dos manos",
+  // ---- Frases motivacionales con autor ----
+  "No te rindas, por favor no cedas, aunque el frío queme, aunque el miedo muerda. (Mario Benedetti)",
+  "La perfección es una pulida colección de errores (Mario Benedetti)",
+  "Recuerda que lo fácil ya lo hice, lo difícil lo estoy haciendo, lo imposible me costará un poco más. (Atribuido a Mario Benedetti)",
+  "Cinco minutos bastan para soñar toda una vida; así de relativo es el tiempo. (Mario Benedetti)",
+  "Después de la tormenta viene la calma… y también la claridad. (Mario Benedetti)",
+  "La gloria no consiste en no caer nunca, sino más bien en levantarse cada vez que caemos. (Confucio)",
+  "El secreto de avanzar es comenzar. (Mark Twain)",
+  "Lo que no te mata, te hace más fuerte. (Friedrich Nietzsche)",
+  "La esperanza es un sueño despierto. (Aristóteles)",
+  "Un héroe no nace de los poderes, nace de las decisiones.",
+  "Haz lo que puedas, con lo que tengas, donde estés. (Theodore Roosevelt)",
+  "La única batalla perdida es la que se abandona. (Mario Benedetti)",
+  "La vida rompe a todos, pero algunos se hacen fuertes en los lugares rotos. (Ernest Hemingway)",
+  "Allí donde hay ruina, hay esperanza de un tesoro. (Rumi)",
+  "Ten paciencia: todo es difícil antes de volverse fácil. (Saadi Shirazi)",
+  "No hay nada imposible, porque los sueños de ayer son las esperanzas de hoy y pueden convertirse en realidad mañana. (Robert H. Goddard)",
+  "Cuando todo parezca ir en tu contra, recuerda que el avión despega contra el viento. (Henry Ford)",
+  "Un héroe es alguien que ha encontrado fuerza para resistir y perseverar a pesar de las dificultades. (Christopher Reeve)",
+  "Sé paciente contigo misma. Nada en la naturaleza florece todo el año. (Autor desconocido)",
+  "Tu valor no depende del día que estás viviendo, sino de tu capacidad de seguir adelante. (Autor desconocido)",
+  "No eres lo que te pasó; eres lo que decides ser después de que te pasó. (Carl Jung)"
+];
+
+const playlist = [
+  { 
+    archivo: "audios/Just _The_Way_You_Are.mp3",
+    nombre: "Just The Way You Are - Bruno Mars"
+  },
+  {
+    archivo: "audios/Garcia.mp3",
+    nombre: "García - Kany García"
+  },
+  { 
+    archivo: "audios/BONSAi.mp3", 
+    nombre: "BONSAI - Alan Sutton y las criaturas de la ansiedad"
+  },
+  { 
+    archivo: "audios/Cuando_Nadie_Ve.mp3",
+    nombre: "Cuando Nadie Ve - Morat"
+  },
+  {
+    archivo: "audios/Llamada Perdida.mp3",
+    nombre: "Llamada Perdida - Morat"
+  },
+  {
+    archivo: "audios/Those Eyes.mp3",
+    nombre: "Those eyes - New West"
+  },
+  {
+    archivo: "audios/Ordinary.mp3",
+    nombre: "Ordinary - Alex Warren"
+  },
+  {
+    archivo: "audios/Waiting for Love.mp3",
+    nombre: "Waiting for Love - Avicii"
+  },
+  {
+    archivo: "audios/Hey Brother.mp3",
+    nombre: "Hey Brother - Avicii"
+  },
+  {
+    archivo: "audios/Otro Atardecer.mp3",
+    nombre: "Otro Atardecer - Bad Bunny"
+  },
+  {
+    archivo: "audios/Us Time.mp3",
+    nombre: "Us Time - Stoney LaRue"
+  },
+  {
+    archivo: "audios/Titanium.mp3",
+    nombre: "David Guetta - Titanium ft. Sia"
+  },
+  {
+    archivo: "audios/The Nights.mp3",
+    nombre: "The Nights - Avicii"
+  },
+  {
+    archivo: "audios/Wake Me Up.mp3",
+    nombre: "Wake Me Up - Avicii"
+  },
+  {
+    archivo: "audios/Garcia.mp3",
+    nombre: "García - Kany García"
+  },
+  {
+    archivo: "audios/The Climb.mp3",
+    nombre: "Miley Cyrus - The Climb"
+  },
+  {
+    archivo: "audios/Roar.mp3",
+    nombre: "Roar - Katy Perry"
+  },
+  {
+    archivo: "audios/The Fastest Man Alive.mp3",
+    nombre: "The Fastest Man Alive - Blake Neely"
+  },
+  {
+    archivo: "audios/Man of Steel Soundtrack.mp3",
+    nombre: "Man of Steel Soundtrack | Flight"
+  }
+
+];
+
+
+
+let indexCancion = 0;
+let musicaIniciada = false;
+let intervaloCambioFrase; // Variable para el intervalo automático
+const reproductor = document.getElementById('musica');
+const mensajeMusica = document.getElementById('mensajeMusica');
+const infoCancion = document.getElementById('nombreCancion');
+const elementoFrase = document.getElementById('frase');
+const contadorAutomatico = document.getElementById('contadorAutomatico');
+
+// Crear partículas flotantes
+function crearParticulas() {
+  for (let i = 0; i < 15; i++) {
+    const particula = document.createElement('div');
+    particula.className = 'particula';
+    particula.style.left = Math.random() * 100 + 'vw';
+    particula.style.animationDelay = Math.random() * 15 + 's';
+    particula.style.width = particula.style.height = (Math.random() * 6 + 4) + 'px';
+    document.body.appendChild(particula);
+  }
+}
+
+// Iniciar música cuando el usuario interactúe por primera vez
+function iniciarMusicaSiPrimeraVez() {
+  if (!musicaIniciada) {
+    musicaIniciada = true;
+    mensajeMusica.textContent = "🎵 Reproduciendo música...";
+    mensajeMusica.style.backgroundColor = 'rgba(127, 255, 212, 0.3)';
+    
+    setTimeout(() => {
+      mensajeMusica.style.opacity = '0.7';
+      setTimeout(() => {
+        mensajeMusica.style.display = 'none';
+      }, 1000);
+    }, 5000);
+    
+    cargarCancion(indexCancion);
+  }
+}
+
+function cargarCancion(i) {
+  // Asegurarse de que el índice esté en rango
+  indexCancion = i % playlist.length;
+  const cancion = playlist[indexCancion];
+  reproductor.src = cancion.archivo;
+  reproductor.load();
+  
+  // Actualizar nombre de canción
+  infoCancion.textContent = cancion.nombre;
+  
+  // Intentar reproducir
+  const promesa = reproductor.play();
+  if (promesa !== undefined) {
+    promesa.catch(error => {
+      console.log("Autoplay bloqueado:", error);
+      mensajeMusica.textContent = "Haz clic para reproducir la música";
+      mensajeMusica.style.display = 'block';
+      mensajeMusica.style.opacity = '1';
+    });
+  }
+}
+
+function cambiarCancion() {
+  // Cambiar a la siguiente canción
+  indexCancion = (indexCancion + 1) % playlist.length;
+  cargarCancion(indexCancion);
+  
+  // Si es la primera interacción, iniciar música
+  if (!musicaIniciada) {
+    iniciarMusicaSiPrimeraVez();
+  }
+  
+  // También cambiar la frase cuando se cambia de canción
+  cambiarFrase();
+  
+  // Efecto visual en el botón
+  const boton = document.querySelector('button');
+  boton.style.background = 'linear-gradient(to right, #b380ff, #7fffd4)';
+  setTimeout(() => {
+    boton.style.background = 'linear-gradient(to right, #7fffd4, #b380ff)';
+  }, 300);
+}
+
+// Cuando termine una canción, pasar a la siguiente automáticamente
+reproductor.addEventListener('ended', cambiarCancion);
+
+function cambiarFrase(event) {
+  // Evitar que el clic en la frase active también el clic del body
+  if (event) event.stopPropagation();
+  
+  // Efecto visual
+  elementoFrase.classList.add('cambiando');
+  
+  // Cambiar la frase
+  const fraseAnterior = elementoFrase.innerText;
+  let nuevaFrase;
+  
+  // Asegurar que la nueva frase no sea igual a la anterior
+  do {
+    nuevaFrase = frases[Math.floor(Math.random() * frases.length)];
+  } while (nuevaFrase === fraseAnterior && frases.length > 1);
+  
+  // Cambiar con efecto
+  setTimeout(() => {
+    elementoFrase.innerText = nuevaFrase;
+    elementoFrase.classList.remove('cambiando');
+  }, 300);
+  
+  // Si es la primera interacción, iniciar música
+  if (!musicaIniciada) {
+    iniciarMusicaSiPrimeraVez();
+  }
+}
+
+// Función para iniciar el cambio automático de frases cada 8 segundos
+function iniciarCambioAutomaticoFrases() {
+  // Limpiar intervalo anterior si existe
+  if (intervaloCambioFrase) {
+    clearInterval(intervaloCambioFrase);
+  }
+  
+  // Iniciar nuevo intervalo cada 12000ms (12 segundos)
+  intervaloCambioFrase = setInterval(() => {
+    cambiarFrase();
+  }, 12000);
+}
+
+// Inicializar página
+window.addEventListener('load', function() {
+  crearParticulas();
+  
+  // Configurar evento de clic en la frase
+  elementoFrase.addEventListener('click', cambiarFrase);
+  
+  // Iniciar cambio automático de frases cada 8 segundos
+  iniciarCambioAutomaticoFrases();
+  
+  // Intentar reproducción automática
+  setTimeout(() => {
+    if (!musicaIniciada) {
+      reproductor.play().then(() => {
+        musicaIniciada = true;
+        mensajeMusica.style.display = 'none';
+      }).catch(() => {
+        mensajeMusica.textContent = "✨ Haz clic en cualquier parte para activar la música";
+        mensajeMusica.style.display = 'block';
+      });
+    }
+  }, 1000);
+});
+
+// También permitir cambiar frase con la tecla Space
+document.addEventListener('keydown', function(event) {
+  if (event.code === 'Space') {
+    event.preventDefault();
+    cambiarFrase(event);
+  }
+  
+  // Permitir cambiar canción con la tecla Enter
+  if (event.code === 'Enter') {
+    event.preventDefault();
+    cambiarCancion();
+  }
+  
+  // Permitir iniciar música con la tecla 'M'
+  if (event.code === 'KeyM' && !musicaIniciada) {
+    event.preventDefault();
+    iniciarMusicaSiPrimeraVez();
+  }
+});
+
+// Actualizar nombre de canción inicial
+infoCancion.textContent = playlist[0].nombre;
+</script>
+</body>
+</html>
